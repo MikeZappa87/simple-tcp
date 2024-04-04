@@ -1,0 +1,18 @@
+version: "3"
+
+tasks:
+  setup-ns:
+    desc: setup network namespaces
+    cmds:
+      - ./scripts/cleanup-ns.sh || true
+      - ./scripts/setup-ns.sh
+  cleanup-ns:
+    desc: cleanup network namespaces
+    cmds:
+      - ./scripts/cleanup-ns.sh
+  run-server:
+    cmds:
+      - ip netns exec server go run ./cmd/server/server.go
+  curl:
+    cmds:
+      - ip netns exec client curl 192.168.100.2/hello
